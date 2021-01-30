@@ -1,10 +1,5 @@
-# from fastapi import FastAPI
-#
-# app = FastAPI()
-#
-# @app.get("/")
-# def index():
-# 	return {"title": "hellooo"}
+#https://stribny.name/blog/2020/07/real-time-data-streaming-using-fastapi-and-websockets/
+
 import json
 import asyncio
 from fastapi import FastAPI
@@ -31,6 +26,6 @@ async def websocket_endpoint(websocket: WebSocket):
 		payload = next(measurements)
 		await websocket.send_json(payload)
 
-# # at last, the bottom of the file/module
-# if __name__ == "__main__":
-# 	uvicorn.run(app)
+# at last, the bottom of the file/module
+if __name__ == "__main__":
+	uvicorn.run(app)
