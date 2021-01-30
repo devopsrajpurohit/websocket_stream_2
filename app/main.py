@@ -24,6 +24,7 @@ async def websocket_endpoint(websocket: WebSocket):
 		payload = next(measurements)
 		await websocket.send_json(payload)
 
+
 # # at last, the bottom of the file/module
 # if __name__ == "__main__":
 # 	uvicorn.run(app)
