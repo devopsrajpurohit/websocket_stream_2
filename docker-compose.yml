@@ -1,9 +1,36 @@
 version: '3'
 services:
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
   core_api:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.core_api.rule=Host(`core_api.example.com`)"
+      - "traefik.http.routers.core_api.entrypoints=websecure"
+      - "traefik.http.routers.core_api.tls.certresolver=myresolve
+    depends_on:
+      traefik:
     build: .
     container_name: "core-api-container-2"
     ports:
       - "8000:15400"
     volumes:
       - ./app/:/app
+
