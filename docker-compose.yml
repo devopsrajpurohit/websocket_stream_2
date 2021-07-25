@@ -25,16 +25,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.core_api.rule=Host(`core_api.example.com`)"
       - "traefik.http.routers.core_api.entrypoints=websecure"
-<<<<<<< HEAD
-      - "traefik.http.routers.core_api.tls.certresolver=myresolve
-    depends_on:
-      traefik:
-    build: .
-    container_name: "core-api-container-2"
-=======
       - "traefik.http.routers.core_api.tls.certresolver=myresolve"
-    container_name: "core-api-container"
->>>>>>> 528e5704d2f6a1701630e1f615a06fda58177307
     ports:
       - "8000:15400"
     volumes:
