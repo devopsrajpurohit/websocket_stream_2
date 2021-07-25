@@ -22,15 +22,11 @@ services:
   core_api:
     build: .
     labels:
-      - "traefik.enable=true" 
-      - "traefik.http.routers.core_api.tls=true"
-      - "traefik.http.routers.core_api.rule=Host(`whoami.localhost`)" ###spacify your IP 
-      - "traefik.http.routers.core_api.entrypoints=https"
-      - "traefik.http.services.core_api.loadbalancer.server.port=15400"
-    container_name: "core-api-container"
+      - "traefik.enable=true"
+      - "traefik.http.routers.core_api.rule=Host(`core_api.example.com`)"
+      - "traefik.http.routers.core_api.entrypoints=websecure"
+      - "traefik.http.routers.core_api.tls.certresolver=myresolve"
     ports:
       - "8000:15400"
     volumes:
       - ./app/:/app  
-    volumes:
-      - ./app/:/app
